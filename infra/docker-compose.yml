@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: minicoze
+      POSTGRES_USER: minicoze
+      POSTGRES_PASSWORD: minicoze
+    ports: ["5432:5432"]
+    volumes: ["postgres-data:/var/lib/postgresql/data"]
+  runtime:
+    build: ../services/agent-runtime
+    environment:
+      LLM_PROVIDER: ${LLM_PROVIDER:-fake}
+      LLM_MODEL: ${LLM_MODEL:-fake}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      FAKE_LLM_RESPONSE: ${FAKE_LLM_RESPONSE:-Fake LLM response.}
+    ports: ["8000:8000"]
+  platform-api:
+    build: ../services/platform-api
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/minicoze
+      DATABASE_USERNAME: minicoze
+      DATABASE_PASSWORD: minicoze
+      RUNTIME_BASE_URL: http://runtime:8000
+    depends_on: [postgres, runtime]
+    ports: ["8080:8080"]
+  web:
+    build: ../apps/web
+    depends_on: [platform-api]
+    ports: ["5173:80"]
+volumes:
+  postgres-data:

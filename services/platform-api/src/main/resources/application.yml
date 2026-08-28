@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mini-coze-platform-api
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/minicoze}
+    username: ${DATABASE_USERNAME:minicoze}
+    password: ${DATABASE_PASSWORD:minicoze}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+server:
+  port: ${SERVER_PORT:8080}
+runtime:
+  base-url: ${RUNTIME_BASE_URL:http://localhost:8000}

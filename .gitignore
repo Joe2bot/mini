@@ -1,0 +1,8 @@
+.DS_Store
+**/node_modules/
+**/dist/
+**/target/
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+.env
