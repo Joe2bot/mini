@@ -35,3 +35,14 @@ class RuntimeEvent(BaseModel):
     @classmethod
     def create(cls, event_id: int, event_type: str, run_id: UUID, trace_id: UUID, data: dict[str, Any]) -> "RuntimeEvent":
         return cls(event_id=event_id, event_type=event_type, run_id=run_id, trace_id=trace_id, timestamp=datetime.now(timezone.utc), data=data)
+
+
+class ToolCall(BaseModel):
+    tool_call_id: str
+    tool_name: str
+    arguments: dict[str, Any]
+
+
+class LLMResult(BaseModel):
+    final_answer: str | None = None
+    tool_calls: list[ToolCall] = Field(default_factory=list)

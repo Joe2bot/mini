@@ -9,8 +9,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 @DataJpaTest
 class AgentServiceTest {
     @Autowired AgentRepository repository;
+    @Autowired AgentToolBindingRepository bindings;
     private AgentService service;
-    @BeforeEach void setup() { service = new AgentService(repository); }
+    @BeforeEach void setup() { service = new AgentService(repository, bindings); }
     @Test void createsAgentWithConfiguredModel() {
         AgentResponse result=service.create(new AgentRequest("Researcher","test agent","be useful","fake","fake",0.2,100));
         assertEquals("Researcher",result.name()); assertEquals("fake",result.modelProvider()); assertTrue(repository.existsById(result.id()));

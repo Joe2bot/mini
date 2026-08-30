@@ -15,6 +15,7 @@ services:
       LLM_API_KEY: ${LLM_API_KEY:-}
       LLM_BASE_URL: ${LLM_BASE_URL:-}
       FAKE_LLM_RESPONSE: ${FAKE_LLM_RESPONSE:-Fake LLM response.}
+      FAKE_LLM_SCENARIO: ${FAKE_LLM_SCENARIO:-direct}
     ports: ["8000:8000"]
   platform-api:
     build: ../services/platform-api
